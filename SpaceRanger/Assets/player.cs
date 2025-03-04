@@ -21,7 +21,7 @@ public class player : MonoBehaviour
     int score;
     public Text score_txt;
     bool paused;
-    bool gameover;
+    public bool gameover;
     public bool gameStart;
     GameObject gameOverScreen;
     public Text HighScoreText;
@@ -72,7 +72,13 @@ public class player : MonoBehaviour
                         paused=false;
                     }
                 }
-            }     
+            }
+        if(gameover){
+            gameObject.GetComponent<SpriteRenderer>().enabled=false;     
+            gameOverScreen.SetActive(true);
+            PlayerPrefs.SetInt("HighScore",score);
+            PlayerPrefs.Save();
+        }
         if(paused)
             Time.timeScale=0f;
         else
@@ -91,15 +97,13 @@ public class player : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag=="enemy"){
-            gameObject.GetComponent<SpriteRenderer>().enabled=false;
+        if(other.tag=="enemy" ||other.name=="Boss"){
+            
             gameover=true;
-            PlayerPrefs.SetInt("HighScore",score);
-            PlayerPrefs.Save();
-            gameOverScreen.SetActive(true);
             var obj=Instantiate(explode,transform.position,transform.rotation);
             Destroy(obj,.31f);
         }
+
     }
     public void startGame(){
                 GameObject.Find("Canvas").transform.GetChild(3).gameObject.SetActive(false);
