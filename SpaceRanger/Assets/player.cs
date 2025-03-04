@@ -25,6 +25,7 @@ public class player : MonoBehaviour
     public bool gameStart;
     GameObject gameOverScreen;
     public Text HighScoreText;
+    public GameObject explode;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,7 +61,7 @@ public class player : MonoBehaviour
         score_txt.text=score.ToString();
             if(Input.GetKeyDown("space")){
                 GameObject pause_menu=GameObject.Find("Canvas").transform.GetChild(1).gameObject;
-                if(!gameover){
+                if(!gameover&&gameStart){
                     if(!paused){
                         pause_menu.SetActive(true);
 
@@ -70,16 +71,8 @@ public class player : MonoBehaviour
                         pause_menu.SetActive(false);
                         paused=false;
                     }
-                }else{
-                    SceneManager.LoadScene(0);
                 }
-            }
-        if(!gameStart){
-            if(Input.GetMouseButtonDown(0)){
-                GameObject.Find("Canvas").transform.GetChild(3).gameObject.SetActive(false);
-                gameStart=true;
-            }
-        }      
+            }     
         if(paused)
             Time.timeScale=0f;
         else
@@ -93,6 +86,7 @@ public class player : MonoBehaviour
             Debug.Log("Shoot");
             GameObject obj=Instantiate(bullet,transform.GetChild(0).position,transform.GetChild(0).rotation);
             obj.GetComponent<Rigidbody2D>().velocity=transform.GetChild(0).up*bullet_speed;
+            GetComponent<AudioSource>().Play();
         }
     }
     void OnTriggerEnter2D(Collider2D other)
@@ -103,7 +97,16 @@ public class player : MonoBehaviour
             PlayerPrefs.SetInt("HighScore",score);
             PlayerPrefs.Save();
             gameOverScreen.SetActive(true);
+            var obj=Instantiate(explode,transform.position,transform.rotation);
+            Destroy(obj,.31f);
         }
+    }
+    public void startGame(){
+                GameObject.Find("Canvas").transform.GetChild(3).gameObject.SetActive(false);
+                gameStart=true;
+    }
+    public void retry(){
+        SceneManager.LoadScene(0);
     }
 
 }

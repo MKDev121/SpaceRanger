@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-
+    public GameObject explode;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +21,10 @@ public class bullet : MonoBehaviour
         if(other.tag=="enemy"){
             Debug.Log("hit");
             Destroy(other.gameObject);
+            var obj=Instantiate(explode,transform.position,transform.rotation);
+            Destroy(obj,.31f);
+            Destroy(gameObject);
+            
         }
     }
 }
