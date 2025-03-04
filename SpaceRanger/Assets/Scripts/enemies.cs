@@ -20,7 +20,7 @@ public class enemies : MonoBehaviour
     void Start()
     {
         spawn_timer=spawn_time;
-        attack_time=2;
+        attack_time=1f;
     }
 
     // Update is called once per frame
@@ -49,11 +49,14 @@ public class enemies : MonoBehaviour
                 else{
                     boss_timer=boss_time;
                     boss_mode=false;
+                    enemy_speed+=.5f;
+                    spawn_time-=.5f;
                 }
                 BossTime(Boss);
 
-            }
 
+            }
+            spawn_time=Mathf.Clamp(spawn_time,.5f,3f);
 
         }
     }
