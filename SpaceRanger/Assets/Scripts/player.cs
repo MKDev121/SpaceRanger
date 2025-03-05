@@ -76,11 +76,15 @@ public class player : MonoBehaviour
         if(gameover){
             gameObject.GetComponent<SpriteRenderer>().enabled=false;     
             gameOverScreen.SetActive(true);
-            PlayerPrefs.SetInt("HighScore",score);
-            PlayerPrefs.Save();
+            if(score>PlayerPrefs.GetInt("HighScore")){
+                PlayerPrefs.SetInt("HighScore",score);
+                PlayerPrefs.Save();
+            }
         }
-        if(paused)
+        if(paused){
             Time.timeScale=0f;
+            GameObject.Find("scorePause").GetComponent<Text>().text=PlayerPrefs.GetInt("HighScore",0).ToString();
+        }
         else
             Time.timeScale=1f;  
     }
