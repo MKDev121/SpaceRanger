@@ -2574,7 +2574,7 @@ MonoBehaviour:
   spawn_time: 3
   Enemy: {fileID: 44324014784599684, guid: b0760ac13b3e4f8488ed4fc46b9e9e66, type: 3}
   enemy_speed: 8
-  boss_time: 7
+  boss_time: 10
   Boss: {fileID: 1319727132}
   bullet: {fileID: 6820088577842419018, guid: c29b44aaa41f3d545bb17a0a9a944ed1, type: 3}
 --- !u!1 &1552236258
@@ -2656,6 +2656,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1552236258}
   m_CullTransparentMesh: 1
+--- !u!1 &1599861450
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1599861452}
+  - component: {fileID: 1599861451}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1599861451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599861450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 7bf19b77357de9e4f963e3e424ec7c74, type: 2}
+--- !u!4 &1599861452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599861450}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.173792, y: 2.1925912, z: 0.036137026}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1832100608
 GameObject:
   m_ObjectHideFlags: 0
@@ -3017,3 +3066,4 @@ SceneRoots:
   - {fileID: 430565808}
   - {fileID: 469262979}
   - {fileID: 1319727134}
+  - {fileID: 1599861452}

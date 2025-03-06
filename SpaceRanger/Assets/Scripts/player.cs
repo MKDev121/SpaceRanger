@@ -102,7 +102,6 @@ public class player : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag=="enemy" ||other.name=="Boss"){
-            
             gameover=true;
             var obj=Instantiate(explode,transform.position,transform.rotation);
             Destroy(obj,.31f);
