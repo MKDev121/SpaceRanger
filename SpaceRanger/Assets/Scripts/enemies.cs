@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Analytics;
+using UnityEngine.U2D.IK;
 
 public class enemies : MonoBehaviour
 {
@@ -13,7 +17,7 @@ public class enemies : MonoBehaviour
     float boss_timer;
     float attack_timer;
     bool boss_mode=true;
-    int count=0;
+    int count=4;
     public GameObject Boss;
     public GameObject bullet;
     // Start is called before the first frame update
@@ -29,13 +33,13 @@ public class enemies : MonoBehaviour
         if(GameObject.Find("player").GetComponent<player>().gameStart){
             if(!boss_mode){
                 Boss.SetActive(false);
+                Boss.transform.position=new Vector3(0f,6f,0f);
                 if(spawn_timer>=0f)
                     spawn_timer-=Time.deltaTime;
-
                 else{
                     Debug.Log("Spawn");
                     spawn_timer=spawn_time;
-                    if(count<=6)
+                    if(count<=3)
                         count++;
                     else{
                         count=0;
@@ -61,15 +65,22 @@ public class enemies : MonoBehaviour
         }
     }
     void Spawn(){
-        GameObject obj=Instantiate(Enemy,transform.position+new Vector3(Random.Range(0,7),0f,0f),transform.rotation);
-        obj.GetComponent<Rigidbody2D>().velocity=-transform.up*enemy_speed/Random.Range(1,1.5f);
-        Destroy(obj,5f);
-        obj=Instantiate(Enemy,transform.position+new Vector3(Random.Range(-7,0),0f,0f),transform.rotation);
-        obj.GetComponent<Rigidbody2D>().velocity=-transform.up*enemy_speed/Random.Range(1,1.5f);
-        Destroy(obj,5f);
+
+        int spawcount=0;
+        while(spawcount<4){
+            Vector3 spaw_pos=new Vector3(Random.Range(-7,7),Random.Range(5f,10f),0f);
+            Collider2D[] colliders=Physics2D.OverlapCircleAll(spaw_pos,1.5f);
+            if(colliders.Length==0){
+                spawcount+=1;
+                 var obj=Instantiate(Enemy,spaw_pos,transform.rotation);
+                 obj.GetComponent<Rigidbody2D>().velocity=-transform.up*enemy_speed/Random.Range(1,1.5f);
+                 Destroy(obj,5f);
+            }
+        }
     }
     void BossTime(GameObject boss){
         boss.SetActive(true);
+        
         if(attack_timer>=0)
             attack_timer-=Time.deltaTime;
         else{
@@ -78,5 +89,9 @@ public class enemies : MonoBehaviour
             obj.GetComponent<Rigidbody2D>().velocity=boss.transform.up*15;
             attack_timer=attack_time;
         }
+        float x=7*Mathf.Sin(2f*Time.time);
+        boss.transform.position=transform.position+ new Vector3(x,-3f,0f);
     }
+
+
 }
