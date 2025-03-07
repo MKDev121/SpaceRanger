@@ -2168,13 +2168,11 @@ MonoBehaviour:
   bullet_speed: 20
   bg_speed: 4
   background: {fileID: 6719378248900141002, guid: 68c2a18f38640d84a8ae9139b0cf634c, type: 3}
-  bgs: []
   score_txt: {fileID: 196788492}
   gameover: 0
   gameStart: 0
   HighScoreText: {fileID: 29624921}
   explode: {fileID: 5716797736749482127, guid: 20275be1e8e57d64d9ddafc3746002eb, type: 3}
-  playerTex: {fileID: 2100000, guid: 6241161d2d5b6ff4590f3424d8aa31bc, type: 2}
 --- !u!50 &1382611525
 Rigidbody2D:
   serializedVersion: 4
