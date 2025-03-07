@@ -1,12 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
-
+using UnityEngine.Rendering;
 public class player : MonoBehaviour
 {
     public float speed;
@@ -26,6 +24,7 @@ public class player : MonoBehaviour
     GameObject gameOverScreen;
     public Text HighScoreText;
     public GameObject explode;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -34,13 +33,19 @@ public class player : MonoBehaviour
         gameOverScreen=GameObject.Find("Canvas").transform.GetChild(2).gameObject;
         if(HighScoreText!=null)
          HighScoreText.text=PlayerPrefs.GetInt("HighScore",0).ToString();
-    
+        
+        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if(!gameover&&gameStart){
+            
+            
+            
             float horizontal=Input.GetAxis("Horizontal");
             float vertical=Input.GetAxis("Vertical");
             
@@ -54,6 +59,8 @@ public class player : MonoBehaviour
                 timer-=Time.deltaTime;
             else{
                 score+=1;
+                Color color=Color.HSVToRGB(Random.value,1,1);
+                GetComponent<SpriteRenderer>().material.SetColor("_Color",color);
                 timer=1;
             }
 

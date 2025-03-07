@@ -2174,6 +2174,7 @@ MonoBehaviour:
   gameStart: 0
   HighScoreText: {fileID: 29624921}
   explode: {fileID: 5716797736749482127, guid: 20275be1e8e57d64d9ddafc3746002eb, type: 3}
+  playerTex: {fileID: 2100000, guid: 6241161d2d5b6ff4590f3424d8aa31bc, type: 2}
 --- !u!50 &1382611525
 Rigidbody2D:
   serializedVersion: 4
