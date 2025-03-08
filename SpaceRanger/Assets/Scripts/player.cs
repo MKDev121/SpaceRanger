@@ -10,11 +10,6 @@ public class player : MonoBehaviour
     public float speed;
     public GameObject bullet;
     public float bullet_speed;
-    public float bg_speed;
-    Camera cam;
-    public GameObject background;
-
-    List<bool> truth_values;
     float timer;
     int score;
     public Text score_txt;
@@ -28,7 +23,6 @@ public class player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam=GameObject.Find("Main Camera").GetComponent<Camera>();
         gameOverScreen=GameObject.Find("Canvas").transform.GetChild(2).gameObject;
         if(HighScoreText!=null)
             HighScoreText.text=PlayerPrefs.GetInt("HighScore",0).ToString();
@@ -41,6 +35,7 @@ public class player : MonoBehaviour
         if(!gameover&&gameStart){
             movement();
             shoot();
+            pausing();
             if(timer>=0f)
                 timer-=Time.deltaTime;
             else{
@@ -73,7 +68,7 @@ public class player : MonoBehaviour
         transform.position+=movement;  
         transform.position=Clamping(transform.position);
     }
-    
+
     void pausing(){
         if(Input.GetKeyDown("space")){
             GameObject pause_menu=GameObject.Find("Canvas").transform.GetChild(1).gameObject;

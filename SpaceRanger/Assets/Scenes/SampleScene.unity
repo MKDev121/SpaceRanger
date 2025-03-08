@@ -2166,8 +2166,6 @@ MonoBehaviour:
   speed: 10
   bullet: {fileID: 6820088577842419018, guid: 512aa85340eb1d842ae5133bf5357afa, type: 3}
   bullet_speed: 20
-  bg_speed: 4
-  background: {fileID: 6719378248900141002, guid: 68c2a18f38640d84a8ae9139b0cf634c, type: 3}
   score_txt: {fileID: 196788492}
   gameover: 0
   gameStart: 0

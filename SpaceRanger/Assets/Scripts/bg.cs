@@ -17,7 +17,7 @@ public class bg : MonoBehaviour
     {
         transform.Translate(Vector2.down*speed*Time.deltaTime);
         if(transform.position.y<4.9f && !spawned){
-            GameObject obj=Instantiate(gameObject,transform.position+new Vector3(0f,9f,0f),transform.rotation);
+            GameObject obj=Instantiate(gameObject,transform.position+new Vector3(0f,GetComponent<SpriteRenderer>().size.y,0f),transform.rotation);
             spawned=true;
         }
         if(transform.position.y<-10f)
