@@ -66,7 +66,7 @@ public class enemies : MonoBehaviour
 
         int spawcount=0;
         while(spawcount<4){
-            Vector3 spaw_pos=new Vector3(Random.Range(-7,7),Random.Range(5f,10f),0f);
+            Vector3 spaw_pos=new Vector3(Random.Range(-9,9),Random.Range(5f,10f),0f);
             Collider2D[] colliders=Physics2D.OverlapCircleAll(spaw_pos,1.5f);
             if(colliders.Length==0){
                 spawcount+=1;

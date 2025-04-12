@@ -26,7 +26,7 @@ public class bullet : MonoBehaviour
             if(other.name=="player"){
             var obj=Instantiate(explode,other.transform.position,other.transform.rotation);
             Destroy(obj,.31f);
-            other.GetComponent<player>().gameover=true;
+            other.GetComponent<player>().currentState=player.gameStates.GameOver;
             
             }
         }
