@@ -30,7 +30,8 @@ public class player : MonoBehaviour
         MainMenu,
         Running,
         Paused,
-        GameOver
+        GameOver,
+        Credits
 
     }
     // Start is called before the first frame update
@@ -86,25 +87,14 @@ public class player : MonoBehaviour
     void movement(Vector2 input){
         float horizontal=input.x;
         float vertical=input.y;
+        //Debug.Log(input);
         Vector3 movement=new Vector3(horizontal,vertical,0)*speed*Time.deltaTime;
         transform.position+=movement;  
         transform.position=Clamping(transform.position);
     }
 
     void pausing(){
-        if(Input.GetKeyDown("space")){
-            GameObject pause_menu=GameObject.Find("Canvas").transform.GetChild(1).gameObject;
-            switch(currentState){
-                case gameStates.Paused:
-                pause_menu.SetActive(false);
-                currentState=gameStates.Running;
-                break;
-                case gameStates.Running:
-                pause_menu.SetActive(true);
-                currentState=gameStates.Paused;
-                break;
-            }
-        }
+
         if(currentState==gameStates.Paused){
             Time.timeScale=0f;
             GameObject.Find("scorePause").GetComponent<Text>().text=PlayerPrefs.GetInt("HighScore",0).ToString();
@@ -118,6 +108,7 @@ public class player : MonoBehaviour
             Debug.Log("Shoot");
             GameObject obj=Instantiate(bullet,transform.GetChild(0).position,transform.GetChild(0).rotation);
             obj.GetComponent<Rigidbody2D>().velocity=transform.GetChild(0).up*bullet_speed;
+            transform.GetChild(1).GetComponent<ParticleSystem>().Play();
             GetComponent<AudioSource>().Play();
         }
     }
@@ -133,14 +124,33 @@ public class player : MonoBehaviour
     public void startGame(){
                 currentState=gameStates.Running;
                 GameObject.Find("Canvas").transform.GetChild(3).gameObject.SetActive(false);
+                GameObject.Find("Canvas").transform.GetChild(7).gameObject.SetActive(true); 
                 gameStart=true;
     }
     public void credits(bool show){
         creditsScreen.SetActive(show);
+       // GameObject pauseButton=GameObject.Find("Canvas").transform.GetChild(7).gameObject;   
+        //pauseButton.SetActive(!show);
         menuScreen.SetActive(!show);
     }
     public void retry(){
         SceneManager.LoadScene(0);
+    }
+    public void pauseGame(){
+            GameObject pause_menu=GameObject.Find("Canvas").transform.GetChild(1).gameObject;
+            GameObject pauseButton=GameObject.Find("Canvas").transform.GetChild(7).gameObject;        
+            switch(currentState){
+                case gameStates.Paused:
+                pause_menu.SetActive(false);
+                pauseButton.SetActive(true);
+                currentState=gameStates.Running;
+                break;
+                case gameStates.Running:
+                pause_menu.SetActive(true);
+                pauseButton.SetActive(false);
+                currentState=gameStates.Paused;
+                break;
+            }
     }
 
 }

@@ -88,6 +88,7 @@ public class enemies : MonoBehaviour
             Debug.Log("Attack");
             GameObject obj=Instantiate(bullet,boss.transform.GetChild(0).position,boss.transform.rotation);
             obj.GetComponent<Rigidbody2D>().velocity=boss.transform.up*15;
+            //Boss.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
             attack_timer=attack_time;
         }
         float x=7*Mathf.Sin(2f*Time.time);
