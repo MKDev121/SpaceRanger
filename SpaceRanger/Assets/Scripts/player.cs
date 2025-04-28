@@ -21,17 +21,20 @@ public class player : MonoBehaviour
     GameObject gameOverScreen;
     public GameObject creditsScreen;
     public GameObject menuScreen;
+    public GameObject leaderboardScreen;
     public Text HighScoreText;
     public GameObject explode;
     public InputActionAsset controls ;
     public gameStates currentState;
+    
     
     public enum gameStates{
         MainMenu,
         Running,
         Paused,
         GameOver,
-        Credits
+        Credits,
+        LeaderBoards
 
     }
     // Start is called before the first frame update
@@ -130,6 +133,12 @@ public class player : MonoBehaviour
     public void credits(bool show){
         creditsScreen.SetActive(show);
        // GameObject pauseButton=GameObject.Find("Canvas").transform.GetChild(7).gameObject;   
+        //pauseButton.SetActive(!show);
+        menuScreen.SetActive(!show);
+    }
+    public void LeaderBoard(bool show){
+        leaderboardScreen.SetActive(show);
+        //GameObject pauseButton=GameObject.Find("Canvas").transform.GetChild(7).gameObject;   
         //pauseButton.SetActive(!show);
         menuScreen.SetActive(!show);
     }

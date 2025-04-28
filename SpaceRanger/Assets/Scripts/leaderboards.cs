@@ -3,68 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Text;
-
+using UnityEngine.UI;
 using System.IO;
+using System.Threading;
 public class leaderboards : MonoBehaviour
 {
-    public string apiUrl = "http://127.0.0.1:5000:5000/get_ID"; // Replace with your API URL
-        // Send data to the backend via POST
-    public void SendDataToBackend(string url, string jsonData,int idx)
-    {
-        StartCoroutine(PostRequest(url, jsonData,idx));
-    }
 
-    private IEnumerator PostRequest(string url, string jsonData,int idx)
-    {
-        // Create a UnityWebRequest with the JSON data
-        byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonData);
-        UnityWebRequest request = new UnityWebRequest(url, "POST");
-        request.uploadHandler = new UploadHandlerRaw(jsonBytes);
-        request.downloadHandler = new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-
-        // Send the request and wait for a response
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.Success)
-        {
-            Debug.Log("Data sent successfully: " + request.downloadHandler.text);
-        }
-        else
-        {
-            Debug.LogError("Error sending data: " + request.error);
-        }
-        if(idx==1){
-            IDResponse response=JsonUtility.FromJson<IDResponse>(request.downloadHandler.text);
-            SetID(response.ID);
-        }
-    }
-
+    public GameObject nameField;
+    public GameObject leaderboard;
+    public GameObject playerStat;
+    public BackendManager backendManager;
+    public Transform content;
     
-
-    // Fetch data from the backend via GET
-    public void FetchDataFromBackend(string url)
-    {
-        StartCoroutine(GetRequest(url));
-    }
-
-    private IEnumerator GetRequest(string url)
-    {
-        UnityWebRequest request = UnityWebRequest.Get(url);
-
-        // Send the request and wait for a response
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.Success)
-        {
-            Debug.Log("Data received: " + request.downloadHandler.text);
-        }
-        else
-        {
-            Debug.LogError("Error fetching data: " + request.error);
-        }
-    }
-  
+    GameObject player;
     class IDResponse{
         public int ID;
     }
@@ -75,9 +26,11 @@ public class leaderboards : MonoBehaviour
         public int ID=0;
     }
     string filePath;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        player=GameObject.Find("player");
         Debug.Log("Persistent Data Path: " + Application.persistentDataPath);
         filePath=Application.persistentDataPath + "/playerData.json";
 
@@ -86,15 +39,23 @@ public class leaderboards : MonoBehaviour
             Debug.Log("Name: " + loadedData.name);
             Debug.Log("Score: " + loadedData.score);
             Debug.Log("ID: " + loadedData.ID);
+            leaderboard.SetActive(true);
+            loadedData=LoadData();
+            backendManager.SendScoreToBackend(loadedData.ID,loadedData.name,loadedData.score);
+            
+            
         }else{
-            PlayerData data=new PlayerData();
+            PlayerData data=new PlayerData{name="",score=PlayerPrefs.GetInt("HighScore"),ID=0}; 
             SaveData(data);
+            nameField.SetActive(true);
             Debug.Log("No data found, created new data file.");
-            SetName();
-            string jsonData = "{\"name\": \"PlayerName\"}";
-            SendDataToBackend( apiUrl, jsonData,1);
+
+            
             //Debug.Log("Data sent to backend: " + jsonData);
         }
+        //string name="Meet";
+
+        //SendDataToBackend( apiUrl, jsonData);
     }
     
 
@@ -123,18 +84,35 @@ public class leaderboards : MonoBehaviour
     }
     public void SetName(){
         PlayerData currentData=LoadData();
-        PlayerData newData=new PlayerData{name="Player1", score=currentData.score, ID=currentData.ID};
+        string playerName=nameField.GetComponent<InputField>().text;
+        PlayerData newData=new PlayerData{name=playerName, score=currentData.score, ID=currentData.ID};
         SaveData(newData);
+        SetScore();
+        nameField.SetActive(false);
+        leaderboard.SetActive(true);
     }
     public void SetScore(){
         PlayerData currentData=LoadData();
-        PlayerData newData=new PlayerData{score=100, name=currentData.name, ID=currentData.ID};
+        PlayerData newData=new PlayerData{score=int.Parse(player.GetComponent<player>().HighScoreText.text), name=currentData.name, ID=currentData.ID};
         SaveData(newData);
+        Debug.Log("Score: " + newData.score);
+        backendManager.SendDataToBackend(currentData.name,currentData.ID,newData.score);
+        backendManager.SendScoreToBackend(currentData.ID,currentData.name,newData.score);
     }
-    void SetID(int ID){
+    public void SetID(int ID){
         PlayerData currentData=LoadData();
         PlayerData newData=new PlayerData{ID=ID, name=currentData.name, score=currentData.score};
         SaveData(newData);
     }
-
+    public void ShowPlayerStats(BackendManager.ScoresResponse stats){
+        int i=0;
+        foreach(var stat in stats.scores){
+            GameObject obj=Instantiate(playerStat,content);
+            obj.transform.SetParent(content);
+            obj.transform.position=content.GetChild(0).position+new Vector3(0,-(i+1)*100,0);
+            obj.transform.GetChild(0).GetComponent<Text>().text=(++i).ToString();
+            obj.transform.GetChild(1).GetComponent<Text>().text=stat.playerName;
+            obj.transform.GetChild(2).GetComponent<Text>().text=stat.playerScore.ToString();
+        }
+    }
 }
