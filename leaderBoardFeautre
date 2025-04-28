@@ -1,0 +1,12 @@
+Leader Board Feature
+---------------------
+
+-Seperate page
+-If first time then ask name and set a unique ID for that device
+-If not then show the leaderboard
+-Display Top 5 and players stats
+
+Working
+-Check if players highscore updated.
+-If updated then send it to the backend.
+-After this checking stage, send the score from backend to the game.
