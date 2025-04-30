@@ -429,7 +429,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &196788491
 RectTransform:
   m_ObjectHideFlags: 0
@@ -444,10 +444,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 430565808}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 160, y: 51.4633}
+  m_AnchorMin: {x: 0.9254752, y: 1}
+  m_AnchorMax: {x: 0.9254752, y: 1}
+  m_AnchoredPosition: {x: 0, y: -9}
+  m_SizeDelta: {x: 123.65, y: 51.4633}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &196788492
 MonoBehaviour:
@@ -18624,7 +18624,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1363222801
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18788,7 +18788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b25f600cf95354ea5b9ed850d2259d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 7.5
   bullet: {fileID: 6820088577842419018, guid: 512aa85340eb1d842ae5133bf5357afa, type: 3}
   bullet_speed: 20
   score_txt: {fileID: 196788492}
@@ -19816,7 +19816,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.065000005, y: 0.8635}
   m_AnchorMax: {x: 0.065000005, y: 0.8635}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 38.9789, y: 37.5103}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1988362456
